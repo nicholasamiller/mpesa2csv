@@ -127,10 +127,12 @@ void Main(string[] args)
 		var transactionType = splitBySpace[length - 3];
 		var descriptionTokens = new ArraySegment<string>(splitBySpace, 3, length - 6).ToList();
 		var description = String.Join(' ', descriptionTokens);
-		if (lines.Count() == 2)
+		if (lines.Count() >= 1)
 		{
-			description += " " + lines[1];		
+			var restOfDescr = String.Join(" ",lines.Skip(1));
+			description += " " + restOfDescr;		
 		}
+		
 		
 		var isWithdrawl = paidInOrWithdrawn < 0;
 		
