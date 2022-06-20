@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32519.379
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPesa2Csv", "MPesa2Csv\MPesa2Csv.csproj", "{D37C5950-872D-42F4-8D41-49341FA3AB4D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D37C5950-872D-42F4-8D41-49341FA3AB4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D37C5950-872D-42F4-8D41-49341FA3AB4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D37C5950-872D-42F4-8D41-49341FA3AB4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D37C5950-872D-42F4-8D41-49341FA3AB4D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7304E85-3726-43B0-A1DF-8AEA207C337F}
+	EndGlobalSection
+EndGlobal
