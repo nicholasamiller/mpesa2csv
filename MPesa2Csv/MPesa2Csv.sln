@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPesa2Csv", "MPesa2Csv\MPesa2Csv.csproj", "{D37C5950-872D-42F4-8D41-49341FA3AB4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MPesa2Csv", "MPesa2Csv\MPesa2Csv.csproj", "{D37C5950-872D-42F4-8D41-49341FA3AB4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPesa2Csv.BlazorWasmApp", "MPesa2Csv.BlazorWasmApp\MPesa2Csv.BlazorWasmApp.csproj", "{0D891A3F-FC60-4FC4-B529-991A4A56D702}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPesa2Csv.Conversion", "MPesa2Csv.Conversion\MPesa2Csv.Conversion.csproj", "{A3B97FD3-7B99-4021-8AD9-6D7B1C59CA47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{D37C5950-872D-42F4-8D41-49341FA3AB4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D37C5950-872D-42F4-8D41-49341FA3AB4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D37C5950-872D-42F4-8D41-49341FA3AB4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D891A3F-FC60-4FC4-B529-991A4A56D702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D891A3F-FC60-4FC4-B529-991A4A56D702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D891A3F-FC60-4FC4-B529-991A4A56D702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D891A3F-FC60-4FC4-B529-991A4A56D702}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3B97FD3-7B99-4021-8AD9-6D7B1C59CA47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3B97FD3-7B99-4021-8AD9-6D7B1C59CA47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3B97FD3-7B99-4021-8AD9-6D7B1C59CA47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3B97FD3-7B99-4021-8AD9-6D7B1C59CA47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
