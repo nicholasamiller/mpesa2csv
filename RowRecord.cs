@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration.Attributes;
 
-namespace MPesa2Csv
+namespace MPesa2Csv.Web
 {
     record RowRecord
     {

@@ -2,14 +2,15 @@
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using MPesa2Csv;
+using MPesa2Csv.Web;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
-public class Program
+public class Converter
 {
 
-    public static void Main(string[] args)
+    public static void Convert(string[] args)
     {
 
         var source = args[0];
