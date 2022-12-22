@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 public class Converter
 {
 
-    public static void Convert(string[] args)
+    public static void Convert  (string[] args)
     {
 
         var source = args[0];
