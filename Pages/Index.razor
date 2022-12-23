@@ -1,81 +1,42 @@
 ﻿@namespace Mpesa2Csv
 @page "/"
+@using MPesa2Csv.Web.Dialogs
 @inject ISnackbar Snackbar
+@inject IDialogService DialogService
+
 
 <PageTitle>Mpesa PDF to CSV converter</PageTitle>
-    <MudForm @bind-IsValid="@success" @bind-Errors="@errors">
-        <MudStack Style="width: 100%">
-    <MudFileUpload T="IBrowserFile" OnFilesChanged="OnInputFileChanged" Hidden="false" Class="flex-1" InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20" InputStyle="opacity:0"  
-                   @ondragenter="@SetDragClass" @ondragleave="@ClearDragClass" @ondragend="@ClearDragClass">
-        <ButtonTemplate>
-            <MudPaper Height="300px" Outlined="true" Class="@DragClass">
-                <MudText Typo="Typo.h6">Drag and drop files here or click</MudText>
-                @foreach (var file in fileNames)
-                {
-                    <MudChip Color="Color.Dark" Text="@file" />
-                }
-            </MudPaper>
-        </ButtonTemplate>
-    </MudFileUpload>
-    <MudToolBar DisableGutters="true" Class="gap-4">
-        <MudButton OnClick="Upload" Disabled="@(!fileNames.Any())" Color="Color.Primary" Variant="Variant.Filled">Upload</MudButton>
-        <MudButton OnClick="Clear" Disabled="@(!fileNames.Any())" Color="Color.Error" Variant="Variant.Filled">Clear</MudButton>
-    </MudToolBar>
-</MudStack>
+<MudFileUpload T="IBrowserFile" FilesChanged="UploadFiles">
+    <ButtonTemplate>
+        <MudButton HtmlTag="label"
+                   Variant="Variant.Filled"
+                   Color="Color.Primary"
+                   StartIcon="@Icons.Filled.CloudUpload"
+                   for="@context">
+            Upload Files
+        </MudButton>
+    </ButtonTemplate>
+</MudFileUpload>
 
-
-    
-    </MudForm>
 
 @code {
-    bool success;
-    string[] errors;
-    MudTextField<string> passwordField;
+    // 
 
     IList<IBrowserFile> files = new List<IBrowserFile>();
-    private async Task UploadFiles(IBrowserFile file)
+    private void UploadFiles(IBrowserFile file)
     {
-                
+        files.Add(file);
+        OpenPasswordDialog();
+
+        // throw up dialog for password
+        // validate pdf 
+        // errors
+        //TODO upload the files to the server
     }
 
-    private void Convert()
-        {
-        }
-
-    private static string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full z-10";
-    private string DragClass = DefaultDragClass;
-    private List<string> fileNames = new List<string>();
-
-    private void OnInputFileChanged(InputFileChangeEventArgs e)
+    private void OpenPasswordDialog()
     {
-        ClearDragClass();
-        var files = e.GetMultipleFiles();
-        foreach (var file in files)
-        {
-            fileNames.Add(file.Name);
-        }
-    }
-
-    private async Task Clear()
-    {
-        fileNames.Clear();
-        ClearDragClass();
-        await Task.Delay(100);
-    }
-    private void Upload()
-    {
-        //Upload the files here
-        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
-        Snackbar.Add("TODO: Upload your files!", Severity.Normal);
-    }
-
-    private void SetDragClass()
-    {
-        DragClass = $"{DefaultDragClass} mud-border-primary";
-    }
-
-    private void ClearDragClass()
-    {
-        DragClass = DefaultDragClass;
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        DialogService.Show<PasswordDialog>("PDF Password", options);
     }
 }
