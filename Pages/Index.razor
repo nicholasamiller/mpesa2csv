@@ -6,7 +6,7 @@
 
 
 <PageTitle>Mpesa PDF to CSV converter</PageTitle>
-<MudFileUpload T="IBrowserFile" FilesChanged="UploadFiles">
+<MudFileUpload T="IBrowserFile" FilesChanged="UploadFiles" Accept=".pdf">
     <ButtonTemplate>
         <MudButton HtmlTag="label"
                    Variant="Variant.Filled"
@@ -20,23 +20,22 @@
 
 
 @code {
-    // 
 
-    IList<IBrowserFile> files = new List<IBrowserFile>();
+    //IList<IBrowserFile> files = new List<IBrowserFile>();
     private void UploadFiles(IBrowserFile file)
     {
-        files.Add(file);
-        OpenPasswordDialog();
+        var fileStream = file.OpenReadStream();
+        
+        OpenPasswordDialog(fileStream);
 
-        // throw up dialog for password
-        // validate pdf 
-        // errors
-        //TODO upload the files to the server
     }
 
-    private void OpenPasswordDialog()
+    private async Task OpenPasswordDialog(Stream fileStream)
     {
         var options = new DialogOptions { CloseOnEscapeKey = true };
-        DialogService.Show<PasswordDialog>("PDF Password", options);
+        var parameters = new DialogParameters();
+        parameters.Add("FileStream", fileStream);
+        var dialog = DialogService.Show<PasswordDialog>("PDF Password", parameters, options);
+        var pdfResult = await dialog.Result;
     }
 }
