@@ -17,7 +17,7 @@
 
 	<ItemGroup>
 	  <Content Update="wwwroot\.nojekyll">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="wwwroot\404.html">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>

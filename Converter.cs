@@ -9,19 +9,8 @@ using System.Text.RegularExpressions;
 
 public class Converter
 {
-
-    public static void Convert  (string[] args)
+    public static Stream ConvertToCsv(PdfDocument pdfDoc)
     {
-
-        var source = args[0];
-        var password = args[1];
-        var outputFile = args[2];
-        var readerProperties = new ReaderProperties().SetPassword(Encoding.UTF8.GetBytes(password));
-        var pdfReader = new PdfReader(source, readerProperties);
-        pdfReader.SetUnethicalReading(true);
-
-        var pdfDoc = new PdfDocument(pdfReader);
-
         var numberOfPages = pdfDoc.GetNumberOfPages();
         var sb = new StringBuilder();
         for (int i = 1; i <= numberOfPages; i++)
@@ -41,7 +30,6 @@ public class Converter
             new Regex("^further guidance.*$",RegexOptions.Multiline),
             new Regex(@"^\s.*$",RegexOptions.Multiline)
         };
-
 
         var allText = sb.ToString();
         var allLines =
@@ -67,15 +55,15 @@ public class Converter
         .Select(l => ConvertLineSetToRecord(l.ToList()))
         .OrderByDescending(r => r.CompletionTime);
 
-
-        using (var writer = new StreamWriter(outputFile))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        {
-            csv.WriteHeader<RowRecord>();
-            csv.NextRecord();
-            csv.WriteRecords(records);
-        }
-
+        var csvStream = new MemoryStream(); 
+        var writer = new StreamWriter(csvStream);
+        var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+        csv.WriteHeader<RowRecord>();
+        csv.NextRecord();
+        csv.WriteRecords(records);
+        csvStream.Position = 0;
+        return csvStream;
+        
         bool IsTokenReciptNumber(string line)
         {
             var firstToken = String.Concat(line.TakeWhile(c => c != ' '));
@@ -105,19 +93,15 @@ public class Converter
                     var tailUntilNewRecord = tail.TakeWhile(l => !IsTokenReciptNumber(l));
                     if (tailUntilNewRecord.Any())
                     {
-
                         group.AddRange(tailUntilNewRecord);
                         tail = tail.Skip(tailUntilNewRecord.Count());
-
                     }
                     acc.Add(group);
                     return recurse(tail, acc);
                 }
-
             }
             return recurse(lines, new List<List<string>>());
         }
-
 
         RowRecord ConvertLineSetToRecord(List<string> lines)
         {
@@ -144,7 +128,6 @@ public class Converter
                 description += " " + restOfDescr;
             }
 
-
             var isWithdrawl = paidInOrWithdrawn < 0;
 
             return new RowRecord()
@@ -160,4 +143,3 @@ public class Converter
         }
     }
 }
-
