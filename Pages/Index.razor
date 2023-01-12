@@ -11,30 +11,19 @@
 @using Microsoft.JSInterop;
 
 
-// upload first
-// then password
-// then convert
 
 <PageTitle>Mpesa PDF to CSV converter</PageTitle>
-<MudCard>
-<EditForm>
-   <MudCardContent>
-       <MudFileUpload T="IBrowserFile" FilesChanged="UploadFiles" Accept=".pdf">
-          <ButtonTemplate>
-            <MudButton HtmlTag="label"
+<MudFileUpload T="IBrowserFile" FilesChanged="UploadFiles" Accept=".pdf">
+    <ButtonTemplate>
+        <MudButton HtmlTag="label"
                    Variant="Variant.Filled"
                    Color="Color.Primary"
                    StartIcon="@Icons.Filled.CloudUpload"
                    for="@context">
             Upload
-          </MudButton>
-          </ButtonTemplate>
-        </MudFileUpload> 
-   </MudCardContent> 
-</EditForm>    
-
-</MudCard>
-
+        </MudButton>
+    </ButtonTemplate>
+</MudFileUpload>
 
 
 @code {

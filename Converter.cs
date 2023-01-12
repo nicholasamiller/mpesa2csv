@@ -31,7 +31,7 @@ public class Converter
             new Regex(@"^\s.*$",RegexOptions.Multiline)
         };
 
-        var allText = sb.ToString() ;
+        var allText = sb.ToString();
         var allLines =
             Regex.Split(allText, "\r\n|\r|\n")
             .SkipWhile(l => !l.StartsWith("Status"))
