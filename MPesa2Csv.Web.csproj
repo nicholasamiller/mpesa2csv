@@ -10,7 +10,7 @@
 		<PackageReference Include="CsvHelper" Version="28.0.1" />
 		<PackageReference Include="fluentvalidation" Version="11.4.0" />
 		<PackageReference Include="itext7" Version="7.2.3" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.2" PrivateAssets="all" />
 		<PackageReference Include="MudBlazor" Version="6.1.2" />
 	</ItemGroup>
