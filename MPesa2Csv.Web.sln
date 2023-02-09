@@ -2,7 +2,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MPesa2Csv.Web", "MPesa2Csv.Web.csproj", "{27C33BFA-37D5-4CEE-B8C6-8F211C21F4B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MPesa2Csv.Web", "client\MPesa2Csv.Web.csproj", "{27C33BFA-37D5-4CEE-B8C6-8F211C21F4B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPesa2Csv.Api", "Api\MPesa2Csv.Api\MPesa2Csv.Api.csproj", "{3B31C79B-4081-40D9-A295-57AC1434E391}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,6 +16,10 @@ Global
 		{27C33BFA-37D5-4CEE-B8C6-8F211C21F4B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27C33BFA-37D5-4CEE-B8C6-8F211C21F4B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27C33BFA-37D5-4CEE-B8C6-8F211C21F4B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B31C79B-4081-40D9-A295-57AC1434E391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B31C79B-4081-40D9-A295-57AC1434E391}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B31C79B-4081-40D9-A295-57AC1434E391}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B31C79B-4081-40D9-A295-57AC1434E391}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
