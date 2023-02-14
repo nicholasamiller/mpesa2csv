@@ -4,7 +4,7 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton OnClick="Submit">Download</MudButton>
+        <MudButton OnClick="Submit" Color="Color.Primary">Download</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -15,8 +15,6 @@
     [Parameter] public String FileName { get; set; }
     [Inject]
     public IJSRuntime JSRuntime { get; set; }
-
-
 
     async void Submit() 
     {

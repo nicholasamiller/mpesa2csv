@@ -45,7 +45,7 @@ namespace Mpesa2Csv
         private async Task OnValidSubmit()
         {
             converting = true;
-            await InvokeAsync(StateHasChanged);
+           // await InvokeAsync(StateHasChanged);
             var password = model.Password;
             var fileName = Regex.Replace(model.BrowserFile.Name, @"\.(pdf|PDF)$", ".csv");
             // PdfReader class throw NotSupportedException given stream from Browserfile.
@@ -55,7 +55,7 @@ namespace Mpesa2Csv
                 await readStream.ReadAsync(pdfBytesReadAsync, 0, (int)readStream.Length);
                 var byteSource = new RandomAccessSourceFactory().CreateSource(pdfBytesReadAsync);
                 var readerProperties = new ReaderProperties().SetPassword(Encoding.UTF8.GetBytes(model.Password ?? ""));
-                var pdfReader = new PdfReader(byteSource, readerProperties);
+                var pdfReader = await Task.Factory.StartNew(() => new PdfReader(byteSource, readerProperties));
                 pdfReader.SetUnethicalReading(true);
                 try
                 {
@@ -76,10 +76,27 @@ namespace Mpesa2Csv
                 {
                     //show the bad password dialog
                     var options = new DialogOptions { CloseOnEscapeKey = true,  };
-                    var badPasswordDialogResult = DialogService.Show<BadPasswordDialog>("Bad Password", options);
+                    var dialogParameters = new DialogParameters();
+                    dialogParameters.Add("Message", "Try national ID");
+                    var badPasswordDialogResult = DialogService.Show<ErrorDialog>("Bad Password", dialogParameters,  options);
                     
                 }
-                // todo: catch other exceptions for bad file
+                catch (PdfException ex)
+                {
+                    //show the bad password dialog
+                    var options = new DialogOptions { CloseOnEscapeKey = true, };
+                    var dialogParameters = new DialogParameters();
+                    dialogParameters.Add("Message", "Invalid PDF");
+                    var badPasswordDialogResult = DialogService.Show<ErrorDialog>("Can't read this PDF.",dialogParameters, options);
+                }
+                catch (Exception ex)
+                {
+                    //show the bad password dialog
+                    var options = new DialogOptions { CloseOnEscapeKey = true, };
+                    var dialogParameters = new DialogParameters();
+                    dialogParameters.Add("Message", "Bad luck!");
+                    var badPasswordDialogResult = DialogService.Show<ErrorDialog>("Something Unexpected Happened", dialogParameters, options);
+                }
 
                 converting = false;
             }

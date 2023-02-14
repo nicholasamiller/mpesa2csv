@@ -1,6 +1,6 @@
 ﻿<MudDialog > 
     <DialogContent>
-        Incorrect password.  Try national ID.
+        @Message
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Submit">Ok</MudButton>
@@ -11,6 +11,7 @@
 
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public string Message { get; set; }
 
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
 }
