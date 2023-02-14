@@ -18,14 +18,23 @@ using System.Text.RegularExpressions;
 using System.Text;
 using Microsoft.JSInterop;
 using Microsoft.VisualBasic;
+using iText.Kernel.Pdf;
+using iText.IO.Source;
+using iText.Kernel.Exceptions;
 
 namespace Mpesa2Csv
 {
     public partial class Index
     {
         [Inject]
-        public HttpClient _httpClient { get; set; }
+        public IJSRuntime _jsRuntime { get; set; }
         
+        [Inject]
+        public HttpClient _httpClient { get; set; }
+
+        [Inject]
+        public IDialogService DialogService { get; set; }
+
         FormModel model;
         bool converting = false;
         protected override async void OnInitialized()
@@ -37,36 +46,43 @@ namespace Mpesa2Csv
         {
             converting = true;
             await InvokeAsync(StateHasChanged);
-            var formDataContent = new MultipartFormDataContent();
             var password = model.Password;
-            var fileContent = new StreamContent(model.BrowserFile.OpenReadStream());
-            formDataContent.Add(fileContent, "file", model.BrowserFile.Name);
-            formDataContent.Add(new StringContent(password), "password");
-            var response = await _httpClient.PostAsync("api/Convert", formDataContent);
-            // if error code shows invalid password, show a dialog with invalid password
-            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            var fileName = Regex.Replace(model.BrowserFile.Name, @"\.(pdf|PDF)$", ".csv");
+            // PdfReader class throw NotSupportedException given stream from Browserfile.
+            using (var readStream = model.BrowserFile.OpenReadStream())
             {
-                var error = await response.Content.ReadAsStringAsync();
-                if (error == "Invalid password")
+                byte[] pdfBytesReadAsync = new byte[readStream.Length];
+                await readStream.ReadAsync(pdfBytesReadAsync, 0, (int)readStream.Length);
+                var byteSource = new RandomAccessSourceFactory().CreateSource(pdfBytesReadAsync);
+                var readerProperties = new ReaderProperties().SetPassword(Encoding.UTF8.GetBytes(model.Password ?? ""));
+                var pdfReader = new PdfReader(byteSource, readerProperties);
+                pdfReader.SetUnethicalReading(true);
+                try
                 {
-                    var parameters = new DialogParameters();
-                    parameters.Add("Message", "Invalid password");
-                    var dialog = DialogService.Show<ErrorDialog>("Error", parameters);
-                    var result = await dialog.Result;
+                    var pdfDocument = new PdfDocument(pdfReader);
+                    using (var convertedToCsvResult = await Task.Factory.StartNew(() => Converter.ConvertToCsv(pdfDocument)))
+                    {
+                        byte[] csvBytesReadAsync = new byte[convertedToCsvResult.Length];
+                        await convertedToCsvResult.ReadAsync(csvBytesReadAsync, 0, (int)convertedToCsvResult.Length);
+                        var dialogParameters = new DialogParameters();
+                        dialogParameters.Add("FileName", fileName);
+                        dialogParameters.Add("CsvBytes", csvBytesReadAsync);
+                        var downloadDialogResult = DialogService.Show<DownloadDialog>("Download", dialogParameters);
+                            
+                        
+                    }
                 }
+                catch (BadPasswordException ex)
+                {
+                    //show the bad password dialog
+                    var options = new DialogOptions { CloseOnEscapeKey = true,  };
+                    var badPasswordDialogResult = DialogService.Show<BadPasswordDialog>("Bad Password", options);
+                    
+                }
+                // todo: catch other exceptions for bad file
+
+                converting = false;
             }
-            else
-            {
-                var csvBytes = await response.Content.ReadAsByteArrayAsync();
-                var csvName = Regex.Replace(model.BrowserFile.Name, ".pdf$", ".csv");
-                // show a dialog with a download link
-                var parameters = new DialogParameters();
-                parameters.Add("CsvBytes", csvBytes);
-                parameters.Add("CsvName", csvName);
-                var dialog = DialogService.Show<DownloadDialog>("Download", parameters);
-            }
-            
-            converting = false;
         }
 
         private async Task UploadFile(InputFileChangeEventArgs e)

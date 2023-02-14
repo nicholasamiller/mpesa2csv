@@ -1,9 +1,6 @@
 ﻿@namespace Mpesa2Csv
 @page "/"
-@using MPesa2Csv.Web.Dialogs
 @inject ISnackbar Snackbar
-@inject IDialogService DialogService
-@inject IJSRuntime JSRuntime
 
 @using System.Text.RegularExpressions
 @using System.Text;
@@ -29,7 +26,7 @@
             }
                <MudTextField InputType="InputType.Password" Label="Password" HelperText="The password to the PDF file, if any." Class="mt-3" @bind-Value="@model.Password" For="@(() => model.Password)"/>
               
-            <ValidationSummary class="" /> 
+            <ValidationSummary/> 
         </MudCardContent>
         <MudCardActions>  
             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto"  >
