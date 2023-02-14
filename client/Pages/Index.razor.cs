@@ -68,7 +68,6 @@ namespace Mpesa2Csv
                         dialogParameters.Add("FileName", fileName);
                         dialogParameters.Add("CsvBytes", csvBytesReadAsync);
                         var downloadDialogResult = DialogService.Show<DownloadDialog>("Download", dialogParameters);
-                            
                         
                     }
                 }
@@ -88,6 +87,13 @@ namespace Mpesa2Csv
                     var dialogParameters = new DialogParameters();
                     dialogParameters.Add("Message", "Invalid PDF");
                     var badPasswordDialogResult = DialogService.Show<ErrorDialog>("Can't read this PDF.",dialogParameters, options);
+                }
+                catch (PdfParsingException ex)
+                {
+                    var options = new DialogOptions { CloseOnEscapeKey = true, };
+                    var dialogParameters = new DialogParameters();
+                    dialogParameters.Add("Message", "Bad luck.  Has the format of the PDF account statement changed?");
+                    var badPasswordDialogResult = DialogService.Show<ErrorDialog>("No Transactions Extracted", dialogParameters, options);
                 }
                 catch (Exception ex)
                 {

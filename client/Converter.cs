@@ -33,7 +33,7 @@ public class Converter
             new Regex("^Customercare@safaricom.co.ke.*$",RegexOptions.Multiline),
             new Regex("^n$",RegexOptions.Multiline),
             new Regex("^Twitter: @SafaricomLtd.*$"),
-            new Regex("^conditions apply*$"),
+            new Regex("^conditions apply.*$"),
             new Regex(@"^\s.*$",RegexOptions.Multiline)
         };
 
@@ -53,24 +53,32 @@ public class Converter
         }
 
         allLines.RemoveAll(l => l == String.Empty);
-
+        
+        
         
         var joined = String.Join(Environment.NewLine, allLines);
 
         var groupedLines = GroupToRecordLines(allLines);
+        
+        if (!groupedLines.Any())
+        {
+            throw new PdfParsingException("No records found");
+        }
 
         var records = groupedLines
         .Select(l => ConvertLineSetToRecord(l.ToList()))
         .OrderByDescending(r => r.CompletionTime);
 
-        var csvStream = new MemoryStream(); 
+        var csvStream = new MemoryStream();
         var writer = new StreamWriter(csvStream);
         var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
         csv.WriteHeader<RowRecord>();
         csv.NextRecord();
         csv.WriteRecords(records);
+        writer.Flush();
         csvStream.Position = 0;
         return csvStream;
+        
         
         bool IsTokenReciptNumber(string line)
         {
