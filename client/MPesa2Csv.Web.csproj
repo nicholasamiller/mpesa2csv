@@ -8,17 +8,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="CsvHelper" Version="28.0.1" />
-		<PackageReference Include="fluentvalidation" Version="11.4.0" />
-		<PackageReference Include="itext7" Version="7.2.3" />
-<<<<<<< HEAD:MPesa2Csv.Web.csproj
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.7" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.2" PrivateAssets="all" />
-		<PackageReference Include="MudBlazor" Version="6.1.2" />
-=======
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.2" PrivateAssets="all" />
 		<PackageReference Include="MudBlazor" Version="6.1.8" />
->>>>>>> 848c80206f5557bb1dbc8ef55e1fdb23b1ee8dff:client/MPesa2Csv.Web.csproj
 	</ItemGroup>
 
 	<ItemGroup>

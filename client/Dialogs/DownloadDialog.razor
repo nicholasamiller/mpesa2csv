@@ -1,0 +1,36 @@
+﻿<MudDialog>
+    <DialogContent>
+        Conversion successful!  Enjoy your MPesa data.
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton OnClick="Submit">Download</MudButton>
+    </DialogActions>
+</MudDialog>
+
+
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public byte[] CsvBytes { get; set; }
+    [Parameter] public String FileName { get; set; }
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+
+
+
+    async void Submit() 
+    {
+
+        await JSRuntime.InvokeVoidAsync("downloadFromByteArray", new
+        {
+            ByteArray = CsvBytes,
+            FileName = FileName,
+            ContentType = "application/csv"
+        });
+
+         MudDialog.Close(DialogResult.Ok(true));
+    }
+    
+    void Cancel() => MudDialog.Cancel();
+}
