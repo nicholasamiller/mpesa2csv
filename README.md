@@ -20,4 +20,5 @@ API uses it to store connection string for Azure Storage.
 New-AzKeyVault -Name "<your-unique-keyvault-name>" -ResourceGroupName "myResourceGroup" -Location "EastUS"
 ```
 
+Set key vault name in appsettings.json
 

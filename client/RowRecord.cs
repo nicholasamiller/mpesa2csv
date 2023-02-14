@@ -5,7 +5,7 @@ namespace MPesa2Csv.Web
     record RowRecord
     {
 
-        [Name("Recipt Number")]
+        [Name("Receipt Number")]
         public string? ReciptNo { get; set; }
 
         [Name("Completion Time (Kenya/Nairobi)")]

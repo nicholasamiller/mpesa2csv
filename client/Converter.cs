@@ -27,18 +27,21 @@ public class Converter
         var regexesToStrip = new List<Regex>()
         {   
             new Regex("^Page [0-9]+ of [0-9]+$",RegexOptions.Multiline),
-            new Regex("^Twitter.*$",RegexOptions.Multiline),
-            new Regex("^Status$",RegexOptions.Multiline),
             new Regex("^Disclaimer:.*$",RegexOptions.Multiline),
             new Regex("^Receipt No.*$",RegexOptions.Multiline),
-            new Regex("^further guidance.*$",RegexOptions.Multiline),
+            new Regex("^please contact the nearest retail shop.*$",RegexOptions.Multiline),
+            new Regex("^Customercare@safaricom.co.ke.*$",RegexOptions.Multiline),
+            new Regex("^n$",RegexOptions.Multiline),
+            new Regex("^Twitter: @SafaricomLtd.*$"),
+            new Regex("^conditions apply*$"),
             new Regex(@"^\s.*$",RegexOptions.Multiline)
         };
 
         var allText = sb.ToString();
         var allLines =
             Regex.Split(allText, "\r\n|\r|\n")
-            .SkipWhile(l => !l.StartsWith("Status"))
+            .SkipWhile(l => l != "DETAILED STATEMENT")
+            .Skip(2)
             .ToList();
 
         foreach (var regex in regexesToStrip)
@@ -51,6 +54,7 @@ public class Converter
 
         allLines.RemoveAll(l => l == String.Empty);
 
+        
         var joined = String.Join(Environment.NewLine, allLines);
 
         var groupedLines = GroupToRecordLines(allLines);
