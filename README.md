@@ -1,4 +1,10 @@
+[![Azure Static Web Apps CI/CD](https://github.com/nicholasamiller/mpesa2csv/actions/workflows/azure-static-web-apps-kind-grass-0bf7b1d10.yml/badge.svg?branch=main)](https://github.com/nicholasamiller/mpesa2csv/actions/workflows/azure-static-web-apps-kind-grass-0bf7b1d10.yml)
+
+
+
 # Convert Your MPesa PDF Account Statement to CSV format
+
+[![Try it](https://kind-grass-0bf7b1d10.2.azurestaticapps.net/)]
 
 For some unfathomable reason, Safaricom does not seem to provide CSV downloads of transactions on MPesa accounts.  I've looked in the mobile apps.  I've looked at their help pages.  I've looked at their developer documentation. It's nowhere.  Amazing.
 
