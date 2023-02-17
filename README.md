@@ -1,24 +1,21 @@
-# mpesa2csv
+# Convert Your MPesa PDF Account Statement to CSV format
 
-What this does:
+For some unfathomable reason, Safaricom does not seem to provide CSV downloads of transactions on MPesa accounts.  I've looked in the mobile apps.  I've looked at their help pages.  I've looked at their developer documentation. It's nowhere.  Amazing.
+
+This app extracts the data from the PDF account statement using a agglomeration of dirty hacks.  
+
+It does not upload the file to any server.  It can run offline.
+
+It works on statements that look like this:
+![Sanitised PDF Example](sanitisedPdfExample.png)
+
+It won't work if the statement has a different layout.
+
+How it works:
 1. The Blazor WASM client collects an MPesa account statement PDF and password from the user using the browser's file upload API.
-2. The Blazor WASM client posts the file and password to an Azure Function.
-3. The Azure Function extracts the transactions from the PDF file. 
-4. The Azure Function saves the transactions as a CSV to an Azure Storage Account.  It generates a secure access signature for the blob with an expiry date.
-5. The Azure Function returns a URL link to file using the secure access signature.
-6. The Blazor WASM client creates shows a dialog with a download link for the user to download.
-
-Thus we can upload and download files without ever reading them into memory using using a javascript API.
+2. It extracts and parses text using the iText libraries in the browser.  It employs numerous brittle hacks.
+3. The user triggers a download.
 
 
-## Setup
 
-Create an Azure Key Vault.
-
-API uses it to store connection string for Azure Storage.
-```
-New-AzKeyVault -Name "<your-unique-keyvault-name>" -ResourceGroupName "myResourceGroup" -Location "EastUS"
-```
-
-Set key vault name in appsettings.json
 
