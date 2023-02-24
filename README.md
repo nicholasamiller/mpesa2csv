@@ -4,7 +4,7 @@
 
 # Convert Your MPesa PDF Account Statement to CSV format
 
-[![Try it](https://kind-grass-0bf7b1d10.2.azurestaticapps.net/)]
+[Try it](https://kind-grass-0bf7b1d10.2.azurestaticapps.net/)
 
 For some unfathomable reason, Safaricom does not seem to provide CSV downloads of transactions on MPesa accounts.  I've looked in the mobile apps.  I've looked at their help pages.  I've looked at their developer documentation. It's nowhere.  Amazing.
 
